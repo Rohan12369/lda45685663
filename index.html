@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>LDA Topic Modeling</title>
+</head>
+<body>
+  <h1>Upload CSV or Excel</h1>
+  <input type="file" id="fileInput" />
+  <button onclick="uploadFile()">Analyze</button>
+  <div id="output"></div>
+
+  <script>
+    function uploadFile() {
+      const file = document.getElementById("fileInput").files[0];
+      const formData = new FormData();
+      formData.append("file", file);
+
+      fetch("https://your-render-app-url.onrender.com/lda", {
+        method: "POST",
+        body: formData,
+      })
+      .then(res => res.json())
+      .then(data => {
+        const div = document.getElementById("output");
+        div.innerHTML = "<h2>Topics:</h2>";
+        data.topics.forEach(topic => {
+          div.innerHTML += `<p><strong>Topic ${topic.id + 1}:</strong> ${topic.keywords.join(', ')}</p>`;
+        });
+      })
+      .catch(err => {
+        alert("Error: " + err.message);
+      });
+    }
+  </script>
+</body>
+</html>

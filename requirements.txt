@@ -1,0 +1,6 @@
+flask
+flask-cors
+pandas
+gensim
+openpyxl
+gunicorn
